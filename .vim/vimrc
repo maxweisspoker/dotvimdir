@@ -1,0 +1,209 @@
+"""Suck it Vi
+set nocompatible
+
+"""Holy shit this no last character thing is getting old fast
+"set virtualedit=onemore
+"nmap i i<Right>
+"""Eh, it's not so bad
+
+"""Install Pathogen for other plugins
+execute pathogen#infect()
+
+"""Turn on dem pretty colors
+set background=dark
+highlight clear
+if exists("syntax_on")
+    syntax reset
+endif
+syntax enable
+highlight    Normal       ctermfg=White       ctermbg=235
+highlight    NonText      ctermfg=DarkGrey    ctermbg=235
+highlight    Statement    ctermfg=LightGreen  ctermbg=235
+highlight    Comment      ctermfg=228         ctermbg=235          cterm=italic
+highlight    Constant     ctermfg=39          ctermbg=235
+highlight    Identifier   ctermfg=147         ctermbg=235
+highlight    Type         ctermfg=Green       ctermbg=235
+highlight    Folded       ctermfg=White       ctermbg=Blue
+highlight    Special      ctermfg=White       ctermbg=235
+highlight    PreProc      ctermfg=111         ctermbg=235
+highlight    Scrollbar    ctermfg=Blue        ctermbg=235
+highlight    Cursor       ctermfg=white       ctermbg=235
+highlight    ErrorMsg     ctermfg=white       ctermbg=124
+highlight    WarningMsg   ctermfg=Black       ctermbg=Yellow
+highlight    VertSplit    ctermfg=White       ctermbg=Blue
+highlight    Directory    ctermfg=Cyan        ctermbg=DarkBlue
+highlight    Visual       ctermfg=Black       ctermbg=Cyan
+highlight    Title        ctermfg=White       ctermbg=Blue
+highlight    StatusLine   ctermfg=White       ctermbg=235          cterm=none
+highlight    StatusLineNC ctermfg=White       ctermbg=235          cterm=none
+highlight    LineNr       ctermfg=White       ctermbg=DarkBlue     cterm=bold
+highlight    CursorLineNr ctermfg=Yellow      ctermbg=Blue         cterm=bold
+
+"""Clean code should rarely exceed 80 chars per line
+"let &colorcolumn=join(range(80,2000),",")
+let &colorcolumn=80
+highlight ColorColumn ctermbg=237
+"highlight OverLength ctermfg=red
+"match OverLength /\%>79v.\+/
+
+"""Attempt to get indents displayed correctly
+"""Then give up trying to get it to work and comment it out
+"filetype plugin indent on
+"let g:indentLine_enabled = 1
+"set list lcs=tab:\|\-
+
+"""Tabs are motherfucking 4 spaces damnit!!!
+set tabstop=4
+set softtabstop=4
+set expandtab
+set shiftwidth=4
+set nosmarttab
+
+"""Highlight current line
+set cursorline
+highlight CursorLine cterm=none ctermbg=237
+
+"""Use highlight to tell me when I'm in insert mode
+autocmd InsertEnter * highlight CursorLine cterm=none ctermbg=59
+autocmd InsertLeave * highlight CursorLine cterm=none ctermbg=237
+
+"""Show whitespace that shouldn't be there
+set list listchars=tab:»·,trail:·,nbsp:·
+
+"""Show line numbers, both absolute and relative
+set relativenumber
+"call RltvNmbr#RltvNmbrCtrl(1)
+"""Plugin takes up way too much processing power, so just using built-in
+set number
+
+"""Now make insert mode show absolute numbering only
+autocmd InsertEnter * set relativenumber!
+autocmd InsertLeave * set relativenumber
+
+"""Caps lock mapped to Esc while in Vim
+"autocmd VimEnter * silent !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+"autocmd VimLeave * silent !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
+
+"""Nevermind, that 0.5 second pause every time I run it is going to be annoying,
+"""so just map Esc to qq. After all, how often do you type qq?
+imap qq <Esc>
+map qq <Esc>
+
+"""While we're at it, force ourselves to practice proper vim movement
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+"""Well I have to fucking naviagte in insert mode somehow
+"imap <up> <nop>
+"imap <down> <nop>
+"imap <left> <nop>
+"imap <right> <nop>
+
+"""While we're at it, let's force ourselves to keep other good habits
+autocmd InsertEnter * let updaterestore=&updatetime | set updatetime=5000
+autocmd InsertLeave * let &updatetime=updaterestore
+autocmd CursorHoldI * silent! stopinsert
+
+"""And while we're forcing ourselves to develop good habits, we
+"""might as well torture ourselves.
+"noremap h <NOP>
+"noremap j <NOP>
+"noremap k <NOP>
+"noremap l <NOP>
+"""Nevermind that's too hard, I can't fucking move. Commenting those out
+"""took like eight minutes. Disabling the arrow keys is plenty for now.
+
+"""{{{Fold}}}
+set foldlevelstart=99
+set foldmethod=indent
+nmap <space> za
+
+"""Don't create wierd new backup files I never asked for
+set nobackup
+
+"""Write backup is cool
+set writebackup
+
+"""And for the love of God please do keep a swap file in case of a crash
+set swapfile
+
+"""Show bottom info bar
+set ruler
+
+"""Remember damn near everything
+set history=999
+
+"""Keep me front and center
+set scrolloff=999
+
+"""Finish my sentences for me
+set showcmd
+set wildmode=longest,list,full
+set wildmenu
+
+"""Show status
+set laststatus=2
+
+"""Remap vim-move movements to ctrl because terminal app captures alt key
+let g:move_key_modifier = 'C'
+"Ctrl+j and Ctrl+k move lines/selections up/down
+"And {num}ctrl+j/k moves them up/down that number of lines
+
+"""Always refresh
+set autowrite
+set autoread
+autocmd FocusGained,BufEnter * :silent! !
+
+"""If not in terminal, use good font
+if has('gui_running')
+    if has('gui_win32')
+        set guifont=DejaVu_Sans_Mono:h10:cANSI
+    else
+        set guifont=DejaVu\ Sans\ Mono\ 10
+    endif
+endif
+
+"""Find my homie
+set showmatch
+
+"""Don't use unnecessary resources
+set lazyredraw
+
+"""Improve searching
+set gdefault
+set ignorecase
+"set smartcase
+set hlsearch
+nmap <silent> ,/ :noh<cr>
+set incsearch
+set showmatch
+
+"""Some basic HTML fixes
+set matchpairs+=<:>
+let g:html_indent_tags = 'li\|p'
+
+"""Some easy standard keys I want to use
+nmap <CR> $a<CR><Esc>
+nmap <Del> i<Del>
+nmap <BS> i<BS>
+"nmap <C-BS> dbi<Del><Esc>
+"imap <C-BS> <Esc>edbi<Del>
+
+"""Just making sure enter key map above doesn't fuck up things
+autocmd CmdwinEnter * nmap <CR> <CR>
+autocmd BufReadPost quickfix nmap <CR> <CR>
+
+"""Nerd Tree
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+map <C-n> :NERDTreeToggle<CR>
+
+"""Sssssave and QQQQQQuit
+nmap sss :w<CR>
+nmap qqq :wq<CR>
+imap sss <Esc>:w<CR>i
+imap qqq <Esc>:wq<CR>
+
