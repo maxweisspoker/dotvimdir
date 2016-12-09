@@ -2,12 +2,18 @@
 set nocompatible
 
 """Holy shit this no last character thing is getting old fast
-"set virtualedit=onemore
-"nmap i i<Right>
-"""Eh, it's not so bad... commented out
+set virtualedit=onemore
 
 """Install Pathogen for other plugins
 execute pathogen#infect()
+
+"""Get cutting and pasting working,
+vmap <C-c> "+y
+nmap <C-v> "+pA
+imap <C-v> <Esc>"+pA
+
+"""Turn on mouse, even though we shouldn't use it.
+set mouse=a
 
 """Attempt to get indents displayed correctly
 """Then give up trying to get it to work and comment it out
@@ -43,6 +49,8 @@ autocmd InsertLeave * set relativenumber
 """so just map Esc to qq. After all, how often do you type qq?
 imap qq <Esc>
 map qq <Esc>
+"""Turns out, never! This qq command is actually working out brillitantly!
+
 
 """While we're at it, force ourselves to practice proper vim movement
 map <up> <nop>
@@ -155,6 +163,15 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 map <C-n> :NERDTreeToggle<CR>
+
+"""Bitch you'll wrap when I fucking tell you to wrap
+set wrap
+set linebreak
+set nolist
+set tw=0
+set textwidth=0
+set wrapmargin=0
+set formatoptions-=t
 
 """Sssssave and QQQQQQuit
 nmap sss :w<CR>
