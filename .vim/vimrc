@@ -49,11 +49,11 @@ map <up> <nop>
 map <down> <nop>
 map <left> <nop>
 map <right> <nop>
-"""Well I have to fucking naviagte in insert mode somehow
-"imap <up> <nop>
-"imap <down> <nop>
-"imap <left> <nop>
-"imap <right> <nop>
+"""Practice, practice, practice!!!
+imap <up> <nop>
+imap <down> <nop>
+imap <left> <nop>
+imap <right> <nop>
 
 """While we're at it, let's force ourselves to keep other good habits
 autocmd InsertEnter * let updaterestore=&updatetime | set updatetime=5000
