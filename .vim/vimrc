@@ -167,8 +167,6 @@ map <C-n> :NERDTreeToggle<CR>
 """Bitch you'll wrap when I fucking tell you to wrap
 set wrap
 set linebreak
-set nolist
-set tw=0
 set textwidth=0
 set wrapmargin=0
 set formatoptions-=t
@@ -211,6 +209,7 @@ highlight    CursorLineNr ctermfg=Yellow      ctermbg=Blue         cterm=bold
 highlight    MatchParen   ctermfg=White       ctermbg=Black        cterm=bold
 
 """Clean code should rarely exceed 80 chars per line
+"""But don't wrap for me, just alert me to where it is
 "let &colorcolumn=join(range(80,2000),",")
 let &colorcolumn=80
 highlight ColorColumn ctermbg=237
