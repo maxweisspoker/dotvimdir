@@ -93,6 +93,10 @@ set fileformat=unix
 """Turn on mouse, even though we shouldn't use it.
 set mouse=a
 
+"""Timeout for key presses
+set ttimeout
+set ttimeoutlen=100
+
 """Attempt to get indents correct
 set autoindent
 set complete-=i
