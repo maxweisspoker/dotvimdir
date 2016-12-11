@@ -37,6 +37,7 @@ Plugin 'fountain.vim'
 Plugin 'shawncplus/phpcomplete.vim'
 Plugin 'StanAngeloff/php.vim'
 Plugin 'scrooloose/syntastic'
+Plugin 'Yggdroot/indentLine'
 
 "Python specifically
 Plugin 'tmhedberg/SimpylFold'
@@ -60,7 +61,6 @@ Plugin 'tpope/vim-surround'
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
 ""Currently not in use
-"Plugin 'Yggdroot/indentLine'
 "Plugin 'tpope/vim-sensible'
 
 """___ END MY PLUGINS ___"""
@@ -90,6 +90,11 @@ set encoding=utf-8
 """There are no carraige returns!
 set fileformat=unix
 
+"Either of these will cause carraige return (\r) line endings to display as ^M
+"e ++ff=unix   "Set this while in the file as a :colon command
+"set binary    "Set this here in the vimrc
+"""Set one of these and enable the eol white space below to see full \r\n line endings
+
 """Turn on mouse, even though we shouldn't use it.
 set mouse=a
 
@@ -102,17 +107,21 @@ set autoindent
 set complete-=i
 set smarttab
 let g:indentLine_enabled = 1
+let g:indentLine_char = '┆'
+let g:indentLine_leadingSpaceChar = '·'
+let g:indentLine_leadingSpaceEnabled = 1
+
+"""Show some whitespace
+set list
+set listchars=tab:»·,trail:·,nbsp:·,extends:»,precedes:«
+"set listchars+=space:·,eol:¬
 
 """Tabs are motherfucking 4 spaces damnit!!!
 set tabstop=4
 set softtabstop=4
 set expandtab
 set shiftwidth=4
-set nosmarttab
-
-"""Show whitespace that shouldn't be there
-set list listchars=tab:»·,trail:·,nbsp:·
-set list lcs=tab:\|\-
+"set nosmarttab
 
 """Misc other vim-sensible things
 if v:version > 703 || v:version == 703 && has("patch541")
@@ -295,8 +304,18 @@ set textwidth=0
 set wrapmargin=0
 set formatoptions-=t
 
-"""Like here, yes wrap here.
+"""Like here, yes wrap here. Look like you wrap, but don't actually new line
 set wrap
+
+"""God motherfucking damnit, I SAID YOU'LL WRAP WHEN I FUCKING TELL YOU TO WRAP
+function DisableAutoLineBreak()
+    set wrap
+    set linebreak
+    set textwidth=0
+    set wrapmargin=0
+    set formatoptions-=t
+endfunction
+autocmd BufNew,BufNewFile,BufAdd,BufCreate,VimEnter * call DisableAutoLineBreak()
 
 """Sssssave and QQQQQQuit 
 nmap sss :w<CR>
@@ -341,6 +360,7 @@ highlight    StatusLineNC ctermfg=White       ctermbg=235          cterm=none
 highlight    LineNr       ctermfg=White       ctermbg=DarkBlue     cterm=bold
 highlight    CursorLineNr ctermfg=Yellow      ctermbg=Blue         cterm=bold
 highlight    MatchParen   ctermfg=White       ctermbg=Black        cterm=bold
+highlight    SpecialKey   ctermfg=239         ctermbg=235
 
 """Clean code should rarely exceed 80 chars per line
 """But don't wrap for me, just alert me to where it is
