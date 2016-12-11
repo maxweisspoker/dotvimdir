@@ -1,11 +1,11 @@
 """ """ Vundle settings """ """
 
 """To install plugins from scratch on new machine after cloning my repo:
-" From vim:  In normal mode, run :PluginInstall
-" From shell:  run  $ vim +PluginInstall +qall
+" From vim :     In normal mode, run :PluginInstall
+" From shell :   vim +PluginInstall +qall
 """To update plugins:
-" Vim:  :PluginUpdate
-" Shell: vim -c VundleUpdate -c quitall
+" From vim :     :PluginUpdate
+" From shell :   vim -c VundleUpdate -c quitall
 " To update on shell quietly:
 " $ vim -i NONE -c VundleUpdate -c quitall > /dev/null 2>&1
 
