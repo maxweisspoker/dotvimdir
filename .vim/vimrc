@@ -250,19 +250,21 @@ set showmatch
 """Don't use unnecessary resources
 set lazyredraw
 
+"""Set leader key to comma
+let mapleader = ","
+
 """Improve searching
 set gdefault
 set ignorecase
 "set smartcase
 set hlsearch
-nmap <silent> ,/ :noh<cr>
+nmap <silent> <leader>/ :noh<cr>
 set incsearch
 set showmatch
 " Use <C-L> to clear the highlighting of :set hlsearch.
 if maparg('<C-L>', 'n') ==# ''
     nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 endif
-"Should also be mapped to <leader>/ which is currently ,/
 
 """Some basic HTML fixes
 set matchpairs+=<:>
