@@ -1,11 +1,71 @@
-"""Suck it Vi
-set nocompatible
+""" """ Vundle settings """ """
+
+"""To install plugins from scratch on new machine after cloning my repo:
+" From vim:  In normal mode, run :PluginInstall
+" From shell:  run  $ vim +PluginInstall +qall
+"""To update plugins:
+" Vim:  :PluginUpdate
+" Shell: vim -c VundleUpdate -c quitall
+" To update on shell quietly:
+" $ vim -i NONE -c VundleUpdate -c quitall > /dev/null 2>&1
+
+"""Required settings for Vundle
+set nocompatible " Suck it, Vi!
+filetype off
+
+"""Set Vundle location and initialize it
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+"alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+"""Vundle must manage Vundle. Do not change!
+Plugin 'VundleVim/Vundle.vim'
+
+"""___ MY PLUGINS HERE ___"""
+
+"Purdy colors
+Plugin 'blockloop/vim-codeschool'
+Plugin 'midnight.vim'
+Plugin 'midnight2.vim'
+Plugin 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
+Plugin 'flazz/vim-colorschemes'
+Plugin 'altercation/vim-colors-solarized'
+
+"Syntax
+Plugin 'fountain.vim'
+Plugin 'shawncplus/phpcomplete.vim'
+Plugin 'StanAngeloff/php.vim'
+
+"Cool shit
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'RltvNmbr.vim'
+Plugin 'ervandew/supertab'
+Plugin 'ConradIrwin/vim-bracketed-paste'
+Plugin 'romainl/vim-cool'
+Plugin 'tpope/vim-fugitive'
+Plugin 'matze/vim-move'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-sensible'
+
+""Currently not in use
+"Plugin 'Yggdroot/indentLine'
+
+"""___ END MY PLUGINS ___"""
+
+"""More info on Vundle Plugins:
+" https://github.com/VundleVim/Vundle.vim/blob/v0.10.2/doc/vundle.txt#L72-L113
+
+call vundle#end()
+"filetype plugin indent on
+filetype plugin on
+
+""" """ End Vundle settings """ """
+
 
 """Holy shit this no last character thing is getting old fast
 set virtualedit=onemore
-
-"""Install Pathogen for other plugins
-execute pathogen#infect()
 
 """Get cutting and pasting working,
 vmap <C-c> "+y
