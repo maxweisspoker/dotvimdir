@@ -36,10 +36,20 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'fountain.vim'
 Plugin 'shawncplus/phpcomplete.vim'
 Plugin 'StanAngeloff/php.vim'
+Plugin 'scrooloose/syntastic'
+
+"Python specifically
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'vim-scripts/indentpython.vim'
+Plugin 'Valloric/YouCompleteMe' " Make sure to edit runme if you take this out
+Plugin 'nvie/vim-flake8'
+autocmd BufRead,BufNewFile *.py,*.pyw let python_highlight_all=1
 
 "Cool shit
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'kien/ctrlp.vim'
 Plugin 'RltvNmbr.vim'
 Plugin 'ervandew/supertab'
 Plugin 'ConradIrwin/vim-bracketed-paste'
@@ -47,6 +57,7 @@ Plugin 'romainl/vim-cool'
 Plugin 'tpope/vim-fugitive'
 Plugin 'matze/vim-move'
 Plugin 'tpope/vim-surround'
+Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
 ""Currently not in use
 "Plugin 'Yggdroot/indentLine'
@@ -67,13 +78,17 @@ filetype plugin indent on
 """Holy shit this no last character thing is getting old fast
 set virtualedit=onemore
 
-"""Get cutting and pasting working,
+"""Get cutting and pasting working
+set clipboard=unnamed
 vmap <C-c> "+y
 nmap <C-v> "+pA
 imap <C-v> <Esc>"+pA
 
 """utf-8 encoding is BEST ENCODING!!!
 set encoding=utf-8
+
+"""There are no carraige returns!
+set fileformat=unix
 
 """Turn on mouse, even though we shouldn't use it.
 set mouse=a
@@ -284,10 +299,11 @@ imap sss <Esc>:w<CR>i
 imap qqq <Esc>:wq<CR>
 
 """Ctrl save and ctrl quit
-nmap <C-s> :w<CR>
-nmap <C-q> :w<CR>
-imap <C-s> <Esc>:w<CR>i
-imap <C-q> <Esc>:wq<CR>
+"nmap <C-s> :w<CR>
+"nmap <C-q> :w<CR>
+"imap <C-s> <Esc>:w<CR>i
+"imap <C-q> <Esc>:wq<CR>
+"""Nevermind, terminal app doesn't let me hook those
 
 """Turn on dem pretty colors
 set background=dark

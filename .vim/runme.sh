@@ -1,4 +1,7 @@
 #!/bin/bash
-vim -i NONE -c PluginInstall -c quitall > /dev/null 2>&1
-vim -i NONE -c VundleUpdate -c quitall > /dev/null 2>&1
-
+vim -c PluginInstall -c quitall
+sleep 2
+vim -c VundleUpdate -c quitall
+sleep 2
+cd $(pwd)/bundle/YouCompleteMe
+./install.py --clang-completer
