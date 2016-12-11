@@ -58,8 +58,8 @@ Plugin 'tpope/vim-surround'
 " https://github.com/VundleVim/Vundle.vim/blob/v0.10.2/doc/vundle.txt#L72-L113
 
 call vundle#end()
-"filetype plugin indent on
-filetype plugin on
+filetype plugin indent on
+"filetype plugin on
 
 """ """ End Vundle settings """ """
 
@@ -72,14 +72,17 @@ vmap <C-c> "+y
 nmap <C-v> "+pA
 imap <C-v> <Esc>"+pA
 
+"""utf-8 encoding is BEST ENCODING!!!
+set encoding=utf-8
+
 """Turn on mouse, even though we shouldn't use it.
 set mouse=a
 
-"""Attempt to get indents displayed correctly
-"""Then give up trying to get it to work and comment it out
-"filetype plugin indent on
-"let g:indentLine_enabled = 1
-"set list lcs=tab:\|\-
+"""Attempt to get indents correct
+set autoindent
+set complete-=i
+set smarttab
+let g:indentLine_enabled = 1
 
 """Tabs are motherfucking 4 spaces damnit!!!
 set tabstop=4
@@ -90,6 +93,30 @@ set nosmarttab
 
 """Show whitespace that shouldn't be there
 set list listchars=tab:»·,trail:·,nbsp:·
+set list lcs=tab:\|\-
+
+"""Misc other vim-sensible things
+if v:version > 703 || v:version == 703 && has("patch541")
+    set formatoptions+=j " Delete comment character when joining commented lines
+endif
+if has('path_extra')
+    setglobal tags-=./tags tags-=./tags; tags^=./tags;
+endif
+if &shell =~# 'fish$' && (v:version < 704 || v:version == 704 && !has('patch276'))
+    set shell=/bin/bash
+endif
+if !empty(&viminfo)
+    set viminfo^=!
+endif
+set sessionoptions-=options
+" Allow color schemes to do bright colors without forcing bold.
+if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
+  set t_Co=16
+endif
+" Load matchit.vim, but only if the user hasn't installed a newer version.
+if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
+  runtime! macros/matchit.vim
+endif
 
 """Show line numbers, both absolute and relative
 set relativenumber
@@ -104,13 +131,14 @@ autocmd InsertLeave * set relativenumber
 """Caps lock mapped to Esc while in Vim
 "autocmd VimEnter * silent !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 "autocmd VimLeave * silent !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
+"""Nevermind, I just set that globally on my system all the time.
 
 """Nevermind, that 0.5 second pause every time I run it is going to be annoying,
 """so just map Esc to qq. After all, how often do you type qq?
-imap qq <Esc>
-map qq <Esc>
+"imap qq <Esc>
+"map qq <Esc>
 """Turns out, never! This qq command is actually working out brillitantly!
-
+"""Actually, with caps lock set, this isn't really necessary.
 
 """While we're at it, force ourselves to practice proper vim movement
 map <up> <nop>
@@ -156,6 +184,7 @@ set ruler
 
 """Remember damn near everything
 set history=999
+set tabpagemax=50
 
 """Keep me front and center
 set scrolloff=999
@@ -164,6 +193,15 @@ set scrolloff=999
 set showcmd
 set wildmode=longest,list,full
 set wildmenu
+
+"""Scroll correctly
+if !&scrolloff
+  set scrolloff=1
+endif
+if !&sidescrolloff
+  set sidescrolloff=5
+endif
+set display+=lastline
 
 """Show status
 set laststatus=2
@@ -201,12 +239,18 @@ set hlsearch
 nmap <silent> ,/ :noh<cr>
 set incsearch
 set showmatch
+" Use <C-L> to clear the highlighting of :set hlsearch.
+if maparg('<C-L>', 'n') ==# ''
+    nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+endif
+"Should also be mapped to <leader>/ which is currently ,/
 
 """Some basic HTML fixes
 set matchpairs+=<:>
 let g:html_indent_tags = 'li\|p'
 
 """Some easy standard keys I want to use
+set backspace=indent,eol,start
 nmap <CR> $a<CR><Esc>
 nmap <Del> i<Del>
 nmap <BS> i<BS>
@@ -225,17 +269,25 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 map <C-n> :NERDTreeToggle<CR>
 
 """Bitch you'll wrap when I fucking tell you to wrap
-set wrap
 set linebreak
 set textwidth=0
 set wrapmargin=0
 set formatoptions-=t
 
-"""Sssssave and QQQQQQuit
+"""Like here, yes wrap here.
+set wrap
+
+"""Sssssave and QQQQQQuit 
 nmap sss :w<CR>
 nmap qqq :wq<CR>
 imap sss <Esc>:w<CR>i
 imap qqq <Esc>:wq<CR>
+
+"""Ctrl save and ctrl quit
+nmap <C-s> :w<CR>
+nmap <C-q> :w<CR>
+imap <C-s> <Esc>:w<CR>i
+imap <C-q> <Esc>:wq<CR>
 
 """Turn on dem pretty colors
 set background=dark
