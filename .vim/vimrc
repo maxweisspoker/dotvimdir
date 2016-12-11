@@ -47,10 +47,10 @@ Plugin 'romainl/vim-cool'
 Plugin 'tpope/vim-fugitive'
 Plugin 'matze/vim-move'
 Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-sensible'
 
 ""Currently not in use
 "Plugin 'Yggdroot/indentLine'
+"Plugin 'tpope/vim-sensible'
 
 """___ END MY PLUGINS ___"""
 
