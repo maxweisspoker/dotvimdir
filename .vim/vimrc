@@ -102,6 +102,9 @@ set mouse=a
 set ttimeout
 set ttimeoutlen=100
 
+"""Keep buffers
+set hidden
+
 """Attempt to get indents correct
 set autoindent
 set complete-=i
@@ -167,6 +170,10 @@ autocmd InsertLeave * set relativenumber
 "map qq <Esc>
 """Turns out, never! This qq command is actually working out brillitantly!
 """Actually, with caps lock set, this isn't really necessary.
+"""On second thought, you know what, I am keeping it.
+imap qq <Esc>
+map qq <Esc>
+
 
 """While we're at it, force ourselves to practice proper vim movement
 map <up> <nop>
