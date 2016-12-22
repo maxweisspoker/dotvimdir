@@ -293,6 +293,16 @@ nmap <Del> i<Del>
 nmap <BS> i<BS>
 "nmap <C-BS> dbi<Del><Esc>
 "imap <C-BS> <Esc>edbi<Del>
+"nmap <C-j> <PageDown>
+"imap <C-j> <PageDown>
+"nmap <C-k> <PageUp>
+"imap <C-k> <PageUp>
+"nmap <C-f> /
+imap <C-f> <Esc>/
+nmap <C-a> <nop>
+imap <C-a> <nop>
+vmap <C-a> <nop>
+map <C-a> <nop>
 
 """Just making sure enter key map above doesn't fuck up things
 autocmd CmdwinEnter * nmap <CR> <CR>
