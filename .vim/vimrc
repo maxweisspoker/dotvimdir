@@ -42,11 +42,39 @@ Plugin 'Yggdroot/indentLine'
 "Python specifically
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-scripts/indentpython.vim'
-Plugin 'Valloric/YouCompleteMe' " Make sure to edit runme if you take this out
+"Plugin 'Valloric/YouCompleteMe' " Make sure to edit runme if you take this out
+"YouCompleteMe git having serious problems lately, commenting out until they fix
 Plugin 'nvie/vim-flake8'
 autocmd BufRead,BufNewFile *.py,*.pyw let python_highlight_all=1
 
+"Java specific
+Plugin 'mikelue/vim-maven-plugin'
+Plugin 'JalaiAmitahl/maven-compiler.vim'
+Plugin 'cilquirm/javacomplete'
+autocmd Filetype java compiler mvn
+autocmd Filetype pom compiler mvn
+function SetJavaOpts()
+    setfiletype java
+    "match these characters with %
+    setlocal matchpairs=(:),{:},[:],<:>
+
+    "eclipse style add a * comments
+    setlocal comments-=s1:/*,mb:*,ex:*/
+    setlocal comments+=fb:*
+
+    "completion options
+    setlocal cscopequickfix=s-,c-,d-,i-,t-,e-
+    setlocal completeopt=longest,menuone
+    setlocal completefunc=javacomplete#Complete
+    "export java classpath as completion locations for javacomplete
+    for i in split($CLASSPATH,":")|call javacomplete#AddClassPath(i)|endfor
+endfunction
+autocmd BufNewFile,Bufread *.java call SetJavaOpts()
+
 "Cool shit
+Plugin 'sjl/gundo.vim'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-session'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
@@ -74,6 +102,11 @@ filetype plugin indent on
 
 """ """ End Vundle settings """ """
 
+
+""" Don't save or load sessions unless I tell you to
+let g:session_autosave = 'no'
+let g:session_autoload = 'no'
+let g:session_directory = '~/.vim-sessions'
 
 """Holy shit this no last character thing is getting old fast
 set virtualedit=onemore
@@ -142,11 +175,11 @@ endif
 set sessionoptions-=options
 " Allow color schemes to do bright colors without forcing bold.
 if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
-  set t_Co=16
+    set t_Co=16
 endif
 " Load matchit.vim, but only if the user hasn't installed a newer version.
 if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
-  runtime! macros/matchit.vim
+    runtime! macros/matchit.vim
 endif
 
 """Show line numbers, both absolute and relative
@@ -187,9 +220,18 @@ imap <left> <nop>
 imap <right> <nop>
 
 """While we're at it, let's force ourselves to keep other good habits
-autocmd InsertEnter * let updaterestore=&updatetime | set updatetime=5000
-autocmd InsertLeave * let &updatetime=updaterestore
-autocmd CursorHoldI * silent! stopinsert
+"autocmd InsertEnter * let updaterestore=&updatetime | set updatetime=5000
+"autocmd InsertLeave * let &updatetime=updaterestore
+"autocmd CursorHoldI * silent! stopinsert
+
+"""Turn the last thing into a function because somewhere along the line
+"""it borks, and for the life of me, I still can't find where
+function SetInsertOffTimer()
+    autocmd InsertEnter * let updaterestore=&updatetime | set updatetime=5000
+    autocmd InsertLeave * let &updatetime=updaterestore
+    autocmd CursorHoldI * silent! stopinsert
+endfunction
+autocmd BufNew,BufNewFile,BufAdd,BufCreate,VimEnter * call SetInsertOffTimer()
 
 """And while we're forcing ourselves to develop good habits, we
 """might as well torture ourselves.
@@ -231,10 +273,10 @@ set wildmenu
 
 """Scroll correctly
 if !&scrolloff
-  set scrolloff=1
+    set scrolloff=1
 endif
 if !&sidescrolloff
-  set sidescrolloff=5
+    set sidescrolloff=5
 endif
 set display+=lastline
 
