@@ -38,12 +38,11 @@ Plugin 'shawncplus/phpcomplete.vim'
 Plugin 'StanAngeloff/php.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'Yggdroot/indentLine'
+Plugin 'Valloric/YouCompleteMe' " Make sure to edit runme if you take this out
 
 "Python specifically
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-scripts/indentpython.vim'
-"Plugin 'Valloric/YouCompleteMe' " Make sure to edit runme if you take this out
-"YouCompleteMe git having serious problems lately, commenting out until they fix
 Plugin 'nvie/vim-flake8'
 autocmd BufRead,BufNewFile *.py,*.pyw let python_highlight_all=1
 
