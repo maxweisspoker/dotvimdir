@@ -37,8 +37,6 @@ Plugin 'fountain.vim'
 Plugin 'shawncplus/phpcomplete.vim'
 Plugin 'StanAngeloff/php.vim'
 Plugin 'scrooloose/syntastic'
-Plugin 'Yggdroot/indentLine'
-Plugin 'Valloric/YouCompleteMe' " Make sure to edit runme if you take this out
 
 "Python specifically
 Plugin 'tmhedberg/SimpylFold'
@@ -85,10 +83,14 @@ Plugin 'romainl/vim-cool'
 Plugin 'tpope/vim-fugitive'
 Plugin 'matze/vim-move'
 Plugin 'tpope/vim-surround'
-Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+
+""Latex
+Plugin 'lervag/vimtex'
 
 ""Currently not in use
 "Plugin 'tpope/vim-sensible'
+"Plugin 'Yggdroot/indentLine'
+"Plugin 'Valloric/YouCompleteMe' " Make sure to edit runme if you take this out
 
 """___ END MY PLUGINS ___"""
 
@@ -101,6 +103,12 @@ filetype plugin indent on
 
 """ """ End Vundle settings """ """
 
+
+"""Load powerline
+let g:powerline_pycmd = 'py3'
+python3 from powerline.vim import setup as powerline_setup
+python3 powerline_setup()
+python3 del powerline_setup
 
 """ Don't save or load sessions unless I tell you to
 let g:session_autosave = 'no'
@@ -129,6 +137,7 @@ set fileformat=unix
 
 """Turn on mouse, even though we shouldn't use it.
 set mouse=a
+set ttymouse=xterm2
 
 """Timeout for key presses
 set ttimeout
@@ -435,4 +444,11 @@ highlight CursorLine cterm=none ctermbg=237
 """Use highlight to tell me when I'm in insert mode
 autocmd InsertEnter * highlight CursorLine cterm=none ctermbg=59
 autocmd InsertLeave * highlight CursorLine cterm=none ctermbg=237
+
+"""LOL no don't fucking hide shit from me, fuck you
+set conceallevel=0
+setlocal conceallevel=0
+let g:vim_json_syntax_conceal = 0
+set cole=0
+au FileType * setl cole=0
 
