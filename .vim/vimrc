@@ -87,10 +87,12 @@ Plugin 'tpope/vim-surround'
 ""Latex
 Plugin 'lervag/vimtex'
 
+""Sometimes works sometimes doesn't
+Plugin 'tpope/vim-sensible'
+Plugin 'Valloric/YouCompleteMe' " Make sure to edit runme if you take this out
+
 ""Currently not in use
-"Plugin 'tpope/vim-sensible'
 "Plugin 'Yggdroot/indentLine'
-"Plugin 'Valloric/YouCompleteMe' " Make sure to edit runme if you take this out
 
 """___ END MY PLUGINS ___"""
 
