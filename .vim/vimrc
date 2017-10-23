@@ -105,6 +105,8 @@ filetype plugin indent on
 
 """ """ End Vundle settings """ """
 
+"""Get YouCompleteMe to work on laptop
+let g:ycm_path_to_python_interpreter = '/usr/bin/python'
 
 """Load powerline
 let g:powerline_pycmd = 'py3'
