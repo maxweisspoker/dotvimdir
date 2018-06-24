@@ -3,18 +3,18 @@
 echo 'Re-installing Vundle'
 rm -rf $(pwd)/bundle/
 mkdir $(pwd)/bundle/
-git clone https://github.com/VundleVim/Vundle.vim.git $(pwd)/bundle/Vundle.vim > /dev/null 2>&1
+git clone https://github.com/VundleVim/Vundle.vim.git $(pwd)/bundle/Vundle.vim
 echo 'Finished'
 echo 'Re-installing Plugins'
-vim -i NONE -c PluginInstall -c quitall > /dev/null 2>&1
+vim -c PluginInstall -c quitall
 echo 'Finished'
 echo 'Updating Plugins'
-vim -i NONE -c VundleUpdate -c quitall > /dev/null 2>&1
+vim -c VundleUpdate -c quitall
 echo 'Finished'
-echo 'Remaking YouCompleteMe objects'
-cd $(pwd)/bundle/YouCompleteMe
-git submodule update --init --recursive > /dev/null 2>&1
-python3 ./install.py --clang-completer > /dev/null 2>&1
+#echo 'Remaking YouCompleteMe objects'
+#cd $(pwd)/bundle/YouCompleteMe
+#git submodule update --init --recursive
+#python3 ./install.py --clang-completer
 echo 'Finished'
 echo ''
 echo 'Script completed.'

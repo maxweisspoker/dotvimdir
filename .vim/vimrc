@@ -68,6 +68,9 @@ function SetJavaOpts()
 endfunction
 autocmd BufNewFile,Bufread *.java call SetJavaOpts()
 
+" General master linter
+Plugin 'w0rp/ale'
+
 "Cool shit
 Plugin 'sjl/gundo.vim'
 Plugin 'xolox/vim-misc'
@@ -89,7 +92,7 @@ Plugin 'lervag/vimtex'
 
 ""Sometimes works sometimes doesn't
 Plugin 'tpope/vim-sensible'
-Plugin 'Valloric/YouCompleteMe' " Make sure to edit runme if you take this out
+"Plugin 'Valloric/YouCompleteMe' " Make sure to edit runme if you take this out
 
 ""Currently not in use
 "Plugin 'Yggdroot/indentLine'
@@ -158,9 +161,10 @@ let g:indentLine_leadingSpaceChar = '·'
 let g:indentLine_leadingSpaceEnabled = 1
 
 """Show some whitespace
-set list
 set listchars=tab:»·,trail:·,nbsp:·,extends:»,precedes:«
 "set listchars+=space:·,eol:¬
+"set listchars+=space:·
+set list
 
 """Tabs are motherfucking 4 spaces damnit!!!
 set tabstop=4
@@ -224,18 +228,12 @@ map <down> <nop>
 map <left> <nop>
 map <right> <nop>
 """Practice, practice, practice!!!
-imap <up> <nop>
-imap <down> <nop>
-imap <left> <nop>
-imap <right> <nop>
+"imap <up> <nop>
+"imap <down> <nop>
+"imap <left> <nop>
+"imap <right> <nop>
 
-"""While we're at it, let's force ourselves to keep other good habits
-"autocmd InsertEnter * let updaterestore=&updatetime | set updatetime=5000
-"autocmd InsertLeave * let &updatetime=updaterestore
-"autocmd CursorHoldI * silent! stopinsert
-
-"""Turn the last thing into a function because somewhere along the line
-"""it borks, and for the life of me, I still can't find where
+"""Leave insert mode after 5 seconds of not editing
 function SetInsertOffTimer()
     autocmd InsertEnter * let updaterestore=&updatetime | set updatetime=5000
     autocmd InsertLeave * let &updatetime=updaterestore
@@ -260,7 +258,7 @@ nmap <space> za
 """Don't create wierd new backup files I never asked for
 set nobackup
 
-"""Write backup is cool
+"""Write backup is cool tho
 set writebackup
 
 """And for the love of God please do keep a swap file in case of a crash
@@ -343,13 +341,13 @@ set backspace=indent,eol,start
 nmap <CR> $a<CR><Esc>
 nmap <Del> i<Del>
 nmap <BS> i<BS>
-"nmap <C-BS> dbi<Del><Esc>
-"imap <C-BS> <Esc>edbi<Del>
-"nmap <C-j> <PageDown>
-"imap <C-j> <PageDown>
-"nmap <C-k> <PageUp>
-"imap <C-k> <PageUp>
-"nmap <C-f> /
+nmap <C-BS> dbi<Del><Esc>
+imap <C-BS> <Esc>edbi<Del>
+nmap <C-S-j> <PageDown>
+imap <C-S-j> <PageDown>
+nmap <C-S-k> <PageUp>
+imap <C-S-k> <PageUp>
+nmap <C-f> /
 imap <C-f> <Esc>/
 nmap <C-a> <nop>
 imap <C-a> <nop>
@@ -399,37 +397,30 @@ imap qqq <Esc>:wq<CR>
 "imap <C-q> <Esc>:wq<CR>
 """Nevermind, terminal app doesn't let me hook those
 
+
+" ALE Setting
+let g:ale_open_list = 'on_save'             " show quickfix or locallist window
+let g:ale_list_window_size = 5
+let g:ale_set_loclist = 0                   " not use locallist show repeat reuslt
+let g:ale_set_quickfix = 1                  " for different lint.
+let g:ale_lint_delay = 500                  " lint after 500 ms.
+let g:ale_lint_on_text_changed = 'normal'   " 'always' kind of annoy
+let g:ale_lint_on_insert_leave = 1
+let g:airline#extentions#ale#enabled = 0
+let g:ale_linters = {
+            \ 'python': ['pycodestyle'],
+            \ 'cpp' : ['gcc','clang']
+            \       }
+" ALE C++ confiure
+let g:ale_cpp_clang_options = '-std=c++11 -Wall'
+let g:ale_cpp_gcc_executable = 'g++'
+let g:ale_cpp_gcc_options = '-std=c++11 -Wall'
+let g:ale_cpp_cppcheck_options = ''
+
+
 """Turn on dem pretty colors
 set background=dark
-highlight clear
-if exists("syntax_on")
-    syntax reset
-endif
-syntax enable
-highlight    Normal       ctermfg=White       ctermbg=235
-highlight    NonText      ctermfg=DarkGrey    ctermbg=235
-highlight    Statement    ctermfg=LightGreen  ctermbg=235
-highlight    Comment      ctermfg=228         ctermbg=235          cterm=italic
-highlight    Constant     ctermfg=39          ctermbg=235
-highlight    Identifier   ctermfg=147         ctermbg=235
-highlight    Type         ctermfg=Green       ctermbg=235
-highlight    Folded       ctermfg=White       ctermbg=Blue
-highlight    Special      ctermfg=White       ctermbg=235
-highlight    PreProc      ctermfg=111         ctermbg=235
-highlight    Scrollbar    ctermfg=Blue        ctermbg=235
-highlight    Cursor       ctermfg=white       ctermbg=235
-highlight    ErrorMsg     ctermfg=white       ctermbg=124
-highlight    WarningMsg   ctermfg=Black       ctermbg=Yellow
-highlight    VertSplit    ctermfg=White       ctermbg=Blue
-highlight    Directory    ctermfg=Cyan        ctermbg=DarkBlue
-highlight    Visual       ctermfg=Black       ctermbg=Cyan
-highlight    Title        ctermfg=White       ctermbg=Blue
-highlight    StatusLine   ctermfg=White       ctermbg=235          cterm=none
-highlight    StatusLineNC ctermfg=White       ctermbg=235          cterm=none
-highlight    LineNr       ctermfg=White       ctermbg=DarkBlue     cterm=bold
-highlight    CursorLineNr ctermfg=Yellow      ctermbg=Blue         cterm=bold
-highlight    MatchParen   ctermfg=White       ctermbg=Black        cterm=bold
-highlight    SpecialKey   ctermfg=239         ctermbg=235
+colorscheme mydefault
 
 """Clean code should rarely exceed 80 chars per line
 """But don't wrap for me, just alert me to where it is
