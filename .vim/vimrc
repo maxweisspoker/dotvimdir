@@ -37,6 +37,7 @@ Plugin 'fountain.vim'
 Plugin 'shawncplus/phpcomplete.vim'
 Plugin 'StanAngeloff/php.vim'
 Plugin 'scrooloose/syntastic'
+Plugin 'jiangmiao/auto-pairs'
 
 "Python specifically
 Plugin 'tmhedberg/SimpylFold'
@@ -71,6 +72,14 @@ autocmd BufNewFile,Bufread *.java call SetJavaOpts()
 " General master linter
 Plugin 'w0rp/ale'
 
+"Misc make my life easier
+Plugin 'djoshea/vim-autoread'
+
+"Debugging
+Plugin 'Conque-GDB'
+Plugin 'Shougo/vimproc.vim'
+Plugin 'idanarye/vim-vebugger'
+
 "Cool shit
 Plugin 'sjl/gundo.vim'
 Plugin 'xolox/vim-misc'
@@ -92,7 +101,7 @@ Plugin 'lervag/vimtex'
 
 ""Sometimes works sometimes doesn't
 Plugin 'tpope/vim-sensible'
-"Plugin 'Valloric/YouCompleteMe' " Make sure to edit runme if you take this out
+Plugin 'Valloric/YouCompleteMe' " Make sure to edit runme if you take this out
 
 ""Currently not in use
 "Plugin 'Yggdroot/indentLine'
@@ -109,25 +118,97 @@ filetype plugin indent on
 """ """ End Vundle settings """ """
 
 
+"""ConqueGDB stuff
+let g:ConqueTerm_CloseOnEnd=1       " close conque when program ends running
+let g:ConqueTerm_StartMessages=0    " display warning message if conqueTerm is configed incorrect
+let g:ConqueGdb_Leader = '\'
+
+"""Extra YCM stuff
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_error_symbol = '>>'
+let g:ycm_warning_symbol = '>*'
+
 """Load powerline
 let g:powerline_pycmd = 'py3'
 python3 from powerline.vim import setup as powerline_setup
 python3 powerline_setup()
 python3 del powerline_setup
 
+"""Allow to replace current buffer window with new file using BDE /path/to/file
+function! ReplaceBuffer(bang, newfile)
+  let curbuf = bufnr('%')
+  exec "e " . a:newfile
+  exec "bd" . a:bang . " " . curbuf
+endfunction
+command! -nargs=1 -complete=file -bang -bar BDE call ReplaceBuffer('<bang>', <f-args>)
+
+"""Refresh vimrc on save
+if has ('autocmd') " Remain compatible with earlier versions
+ augroup vimrc     " Source vim configuration upon save
+    autocmd! BufWritePost $MYVIMRC source % | echom "Reloaded " . $MYVIMRC | redraw
+    autocmd! BufWritePost $MYGVIMRC if has('gui_running') | so % | echom "Reloaded " . $MYGVIMRC | endif | redraw
+  augroup END
+endif " has autocmd
+
+"""Python ignore E501 line too long
+let g:syntastic_python_checkers=['flake8']
+let g:syntastic_python_checker_args='--ignore=E501'
+let g:syntastic_python_flake8_post_args='--ignore=E501'
+let g:syntastic_python_flake8_args='--ignore=E501'
+let g:ale_python_flake8_args='--ignore=E501'
+let g:pymode_lint_ignore = "E501"
+
+"""More Python and C++ highlighting
+let python_highlight_all=1
+let python_highlight_builtins=1
+syn match pythonSelf   /\v(self|cls)/ contained
+syn match pythonSelf   /\v(self|cls)/
+syn match pythonDunder '__\w\+__'
+syn match pythonMember /\vself\.\w+(\w|\()@!/hs=s+5 contains=pythonSelf
+syn match pythonMember /\vcls\.\w+(\w|\()@!/hs=s+4 contains=pythonSelf
+hi link pythonSelf    Identifier
+hi link pythonDunder  Define
+hi link pythonMember Type
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+
+"""Don't go back a char when leaving insert mode
+au InsertLeave * call cursor([getpos('.')[1], getpos('.')[2]+1])
+
 """ Don't save or load sessions unless I tell you to
 let g:session_autosave = 'no'
 let g:session_autoload = 'no'
 let g:session_directory = '~/.vim-sessions'
+
+"""But do autosave every few minutes
+au BufRead,BufNewFile * let b:autosave_start_time=localtime()
+au CursorHold * call UpdateFile()
+" Try/catch used in function because it failed on empty new unnamed files, which I don't care about
+function! UpdateFile()
+  try
+    if ((localtime() - b:autosave_start_time) >= 200)
+      update
+      let b:autosave_start_time=localtime()
+    endif
+  catch
+    echo ""
+  endtry
+endfunction
+au BufWritePre * let b:autosave_start_time=localtime()
 
 """Holy shit this no last character thing is getting old fast
 set virtualedit=onemore
 
 """Get cutting and pasting working
 set clipboard=unnamed
-vmap <C-c> "+y
-nmap <C-v> "+pA
-imap <C-v> <Esc>"+pA
+"vmap <C-c> "+y
+"nmap <C-v> "+pA
+"imap <C-v> <Esc>"+pAi
+"imap <C-S-v> <Esc>"+pAi
+"""Actually, my terminal captures all of the Ctrl+C and Ctrl+V stuff, so I really
+"""just need to get used to y and p
 
 """utf-8 encoding is BEST ENCODING!!!
 set encoding=utf-8
@@ -363,7 +444,8 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-map <C-n> :NERDTreeToggle<CR>
+map <C-Bslash> :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1
 
 """Bitch you'll wrap when I fucking tell you to wrap
 set linebreak
@@ -417,6 +499,12 @@ let g:ale_cpp_gcc_executable = 'g++'
 let g:ale_cpp_gcc_options = '-std=c++11 -Wall'
 let g:ale_cpp_cppcheck_options = ''
 
+"""LOL no don't fucking hide shit from me, fuck you
+set conceallevel=0
+setlocal conceallevel=0
+let g:vim_json_syntax_conceal = 0
+set cole=0
+au FileType * setl cole=0
 
 """Turn on dem pretty colors
 set background=dark
@@ -437,11 +525,4 @@ highlight CursorLine cterm=none ctermbg=237
 """Use highlight to tell me when I'm in insert mode
 autocmd InsertEnter * highlight CursorLine cterm=none ctermbg=59
 autocmd InsertLeave * highlight CursorLine cterm=none ctermbg=237
-
-"""LOL no don't fucking hide shit from me, fuck you
-set conceallevel=0
-setlocal conceallevel=0
-let g:vim_json_syntax_conceal = 0
-set cole=0
-au FileType * setl cole=0
 

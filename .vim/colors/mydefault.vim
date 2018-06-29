@@ -6,7 +6,6 @@ syntax enable
 highlight    Normal       ctermfg=White       ctermbg=235
 highlight    NonText      ctermfg=DarkGrey    ctermbg=235
 highlight    Statement    ctermfg=LightGreen  ctermbg=235
-highlight    Comment      ctermfg=228         ctermbg=235          cterm=italic
 highlight    Constant     ctermfg=39          ctermbg=235
 highlight    Identifier   ctermfg=147         ctermbg=235
 highlight    Type         ctermfg=Green       ctermbg=235
@@ -27,4 +26,5 @@ highlight    LineNr       ctermfg=White       ctermbg=DarkBlue     cterm=bold
 highlight    CursorLineNr ctermfg=Yellow      ctermbg=Blue         cterm=bold
 highlight    MatchParen   ctermfg=White       ctermbg=Black        cterm=bold
 highlight    SpecialKey   ctermfg=239         ctermbg=235
+highlight    Comment      ctermfg=228         ctermbg=235          cterm=italic
 

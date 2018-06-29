@@ -1,20 +1,27 @@
 #!/bin/bash
 # Do not move this script, it must stay in the current directory!
+PWD=$(pwd)
 echo 'Re-installing Vundle'
-rm -rf $(pwd)/bundle/
-mkdir $(pwd)/bundle/
-git clone https://github.com/VundleVim/Vundle.vim.git $(pwd)/bundle/Vundle.vim
+mkdir -p $PWD/bundle/
+rm -rf $PWD/bundle/*
+git clone https://github.com/VundleVim/Vundle.vim.git $(pwd)/bundle/Vundle.vim > /dev/null 2>&1
 echo 'Finished'
 echo 'Re-installing Plugins'
-vim -c PluginInstall -c quitall
+vim -c PluginInstall -c quitall -i NONE > /dev/null 2>&1
 echo 'Finished'
 echo 'Updating Plugins'
-vim -c VundleUpdate -c quitall
+vim -c VundleUpdate -c quitall -i NONE > /dev/null 2>&1
 echo 'Finished'
-#echo 'Remaking YouCompleteMe objects'
-#cd $(pwd)/bundle/YouCompleteMe
-#git submodule update --init --recursive
+echo 'Compiling debugging interface'
+cd $PWD/bundle/vimproc.vim
+make > /dev/null 2>&1
+echo 'Finished'
+echo 'Remaking YouCompleteMe objects'
+cd $PWD/bundle/YouCompleteMe
+git submodule update --init --recursive > /dev/null 2>&1
 #python3 ./install.py --clang-completer
+##The next line is for Arch, the previous line is for Ubuntu
+python3 ./install.py --clang-completer --system-libclang > /dev/null 2>&1
 echo 'Finished'
 echo ''
 echo 'Script completed.'
@@ -30,7 +37,7 @@ echo 'Script completed.'
 #             --enable-multibyte \
 #             --enable-rubyinterp=yes \
 #             --enable-python3interp=yes \
-#             --with-python3-config-dir=/usr/lib/python3.5/config \
+#             --with-python3-config-dir=/usr/lib/python3.6/config \
 #             --enable-perlinterp=yes \
 #             --enable-luainterp=yes \
 #             --enable-gui=gtk2 \
