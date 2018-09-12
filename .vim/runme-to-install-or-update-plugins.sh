@@ -1,6 +1,6 @@
 #!/bin/bash
 # Do not move this script, it must stay in the current directory!
-PWD=$(pwd)
+PWD='~/.vim'
 echo 'Re-installing Vundle'
 mkdir -p $PWD/bundle/
 rm -rf $PWD/bundle/*
