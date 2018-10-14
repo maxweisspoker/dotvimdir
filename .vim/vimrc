@@ -99,6 +99,11 @@ Plugin 'tpope/vim-surround'
 ""Latex
 Plugin 'lervag/vimtex'
 
+""Unite and Zotero
+Plugin 'Shougo/neomru.vim'
+Plugin 'Shougo/unite.vim'
+Plugin 'rafaqz/citation.vim'
+
 ""Sometimes works sometimes doesn't
 Plugin 'tpope/vim-sensible'
 Plugin 'Valloric/YouCompleteMe' " Make sure to edit runme if you take this out
@@ -173,6 +178,17 @@ hi link pythonMember Type
 let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
+
+"""Zotero
+let g:citation_vim_mode="zotero"
+let g:citation_vim_zotero_path="~/mnt/Zotero"
+let g:citation_vim_zotero_version=5
+let g:citation_vim_cache_path='/tmp/vim_citation_cache'
+let g:citation_vim_outer_prefix="["
+let g:citation_vim_inner_prefix="@"
+let g:citation_vim_suffix="]"
+let g:citation_vim_et_al_limit=5
+let g:citation_vim_reverse_order=1
 
 """Don't go back a char when leaving insert mode
 au InsertLeave * call cursor([getpos('.')[1], getpos('.')[2]+1])
