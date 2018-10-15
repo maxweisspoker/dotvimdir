@@ -98,6 +98,7 @@ Plugin 'tpope/vim-surround'
 
 ""Latex
 Plugin 'lervag/vimtex'
+Plugin 'ying17zi/vim-live-latex-preview'
 
 ""Unite and Zotero
 Plugin 'Shougo/neomru.vim'
