@@ -218,14 +218,23 @@ au BufWritePre * let b:autosave_start_time=localtime()
 """Holy shit this no last character thing is getting old fast
 set virtualedit=onemore
 
+
 """Get cutting and pasting working
-set clipboard=unnamed
-"vmap <C-c> "+y
-"nmap <C-v> "+pA
-"imap <C-v> <Esc>"+pAi
-"imap <C-S-v> <Esc>"+pAi
+set clipboard^=unnamedplus
+"vmap <C-c> "*y :let @+=@*<CR>
+"vmap <C-S-c> "*y :let @+=@*<CR>
+"nmap <C-v> ["+]gP
+"nmap <C-S-v> ["*]gP
+"imap <C-v> <Esc>["+]gP<Esc>i<Right>
+"imap <C-S-v> <Esc>["*]gP<Esc>i<Right>
 """Actually, my terminal captures all of the Ctrl+C and Ctrl+V stuff, so I really
 """just need to get used to y and p
+":nnoremap <expr> y (v:register ==# '"' ? '"+' : '') . 'y'
+":nnoremap <expr> yy (v:register ==# '"' ? '"+' : '') . 'yy'
+":nnoremap <expr> Y (v:register ==# '"' ? '"+' : '') . 'Y'
+":xnoremap <expr> y (v:register ==# '"' ? '"+' : '') . 'y'
+":xnoremap <expr> Y (v:register ==# '"' ? '"+' : '') . 'Y'
+
 
 """utf-8 encoding is BEST ENCODING!!!
 set encoding=utf-8
