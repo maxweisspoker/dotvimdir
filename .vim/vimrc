@@ -1,54 +1,60 @@
-""" """ Vundle settings """ """
+" __   _(_)_ __ ___  _ __ ___
+" \ \ / / | '_ ` _ \| '__/ __|
+"  \ V /| | | | | | | | | (__
+"   \_/ |_|_| |_| |_|_|  \___|
 
-"""To install plugins from scratch on new machine after cloning my repo:
-" From vim :     In normal mode, run :PluginInstall
-" From shell :   vim +PluginInstall +qall
-"""To update plugins:
-" From vim :     :PluginUpdate
-" From shell :   vim -c VundleUpdate -c quitall
-" To update on shell quietly:
-" $ vim -i NONE -c VundleUpdate -c quitall > /dev/null 2>&1
 
-"""Required settings for Vundle
+
+"""Required settings
 set nocompatible " Suck it, Vi!
 filetype off
 
-"""Set Vundle location and initialize it
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-"alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
 
-"""Vundle must manage Vundle. Do not change!
-Plugin 'VundleVim/Vundle.vim'
+
+""" """ Begin Plug settings """ """
+
+"""Download and install it first, if it's not installed, and run it
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+"""Initialize Plug
+" Specify a directory for plugins
+" - For Neovim: ~/.local/share/nvim/plugged
+" - Avoid using standard Vim directory names like 'plugin'
+"call plug#begin('~/.vim/plugged')
+call plug#begin('~/.vim/bundle')
+
 
 """___ MY PLUGINS HERE ___"""
 
 "Purdy colors
-Plugin 'blockloop/vim-codeschool'
-Plugin 'midnight.vim'
-Plugin 'midnight2.vim'
-Plugin 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
-Plugin 'flazz/vim-colorschemes'
-Plugin 'altercation/vim-colors-solarized'
+Plug 'blockloop/vim-codeschool'
+Plug 'vim-scripts/midnight.vim'
+Plug 'vim-scripts/midnight2.vim'
+Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
+Plug 'flazz/vim-colorschemes'
+Plug 'altercation/vim-colors-solarized'
 
 "Syntax
-Plugin 'fountain.vim'
-Plugin 'shawncplus/phpcomplete.vim'
-Plugin 'StanAngeloff/php.vim'
-Plugin 'scrooloose/syntastic'
-Plugin 'jiangmiao/auto-pairs'
+Plug 'vim-scripts/fountain.vim'
+Plug 'shawncplus/phpcomplete.vim'
+Plug 'StanAngeloff/php.vim'
+Plug 'scrooloose/syntastic'
+Plug 'jiangmiao/auto-pairs'
 
 "Python specifically
-Plugin 'tmhedberg/SimpylFold'
-Plugin 'vim-scripts/indentpython.vim'
-Plugin 'nvie/vim-flake8'
+Plug 'tmhedberg/SimpylFold'
+Plug 'vim-scripts/indentpython.vim'
+Plug 'nvie/vim-flake8'
 autocmd BufRead,BufNewFile *.py,*.pyw let python_highlight_all=1
 
 "Java specific
-Plugin 'mikelue/vim-maven-plugin'
-Plugin 'JalaiAmitahl/maven-compiler.vim'
-Plugin 'cilquirm/javacomplete'
+Plug 'mikelue/vim-maven-plugin'
+Plug 'JalaiAmitahl/maven-compiler.vim'
+Plug 'cilquirm/javacomplete'
 autocmd Filetype java compiler mvn
 autocmd Filetype pom compiler mvn
 function SetJavaOpts()
@@ -70,58 +76,58 @@ endfunction
 autocmd BufNewFile,Bufread *.java call SetJavaOpts()
 
 " General master linter
-Plugin 'w0rp/ale'
+Plug 'w0rp/ale'
 
 "Misc make my life easier
-Plugin 'djoshea/vim-autoread'
+Plug 'djoshea/vim-autoread'
 
 "Debugging
-Plugin 'Conque-GDB'
-Plugin 'Shougo/vimproc.vim'
-Plugin 'idanarye/vim-vebugger'
+Plug 'vim-scripts/Conque-GDB'
+Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+Plug 'idanarye/vim-vebugger'
 
 "Cool shit
-Plugin 'sjl/gundo.vim'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-session'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'kien/ctrlp.vim'
-Plugin 'RltvNmbr.vim'
-Plugin 'ervandew/supertab'
-Plugin 'ConradIrwin/vim-bracketed-paste'
-Plugin 'romainl/vim-cool'
-Plugin 'tpope/vim-fugitive'
-Plugin 'matze/vim-move'
-Plugin 'tpope/vim-surround'
+Plug 'sjl/gundo.vim'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-session'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'kien/ctrlp.vim'
+Plug 'vim-scripts/RltvNmbr.vim'
+Plug 'ervandew/supertab'
+Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'romainl/vim-cool'
+Plug 'tpope/vim-fugitive'
+Plug 'matze/vim-move'
+Plug 'tpope/vim-surround'
 
 ""Latex
-Plugin 'lervag/vimtex'
-Plugin 'ying17zi/vim-live-latex-preview'
+Plug 'lervag/vimtex'
+Plug 'ying17zi/vim-live-latex-preview'
 
 ""Unite and Zotero
-Plugin 'Shougo/neomru.vim'
-Plugin 'Shougo/unite.vim'
-Plugin 'rafaqz/citation.vim'
+Plug 'Shougo/neomru.vim'
+Plug 'Shougo/unite.vim'
+Plug 'rafaqz/citation.vim'
 
 ""Sometimes works sometimes doesn't
-Plugin 'tpope/vim-sensible'
-Plugin 'Valloric/YouCompleteMe' " Make sure to edit runme if you take this out
+Plug 'tpope/vim-sensible'
+Plug 'Valloric/YouCompleteMe', { 'do': 'git submodule update --init --recursive && python3 ./install.py --clang-completer --system-libclang' }
 
 ""Currently not in use
-"Plugin 'Yggdroot/indentLine'
+"Plug 'Yggdroot/indentLine'
 
 """___ END MY PLUGINS ___"""
 
-"""More info on Vundle Plugins:
-" https://github.com/VundleVim/Vundle.vim/blob/v0.10.2/doc/vundle.txt#L72-L113
 
-call vundle#end()
+call plug#end()
 filetype plugin indent on
 "filetype plugin on
+syntax enable
 
-""" """ End Vundle settings """ """
+""" """ End Plug settings """ """
+
 
 
 """ConqueGDB stuff
