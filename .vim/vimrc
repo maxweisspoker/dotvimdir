@@ -91,7 +91,7 @@ Plug 'sjl/gundo.vim'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
 Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'kien/ctrlp.vim'
 Plug 'vim-scripts/RltvNmbr.vim'
