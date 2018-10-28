@@ -218,23 +218,30 @@ au BufWritePre * let b:autosave_start_time=localtime()
 """Holy shit this no last character thing is getting old fast
 set virtualedit=onemore
 
+"""Get cutting and pasting working by attempting to disable xorg sel buf
+"""and setting default yank and paste to + buffer
+set clipboard+=unnamedplus
+au BufWrite * let @*=@+
+au BufWrite + let @*=@+
+let @*=@+
+nnoremap <expr> y (v:register ==# '"' ? '"+' : '') . 'y'
+nnoremap <expr> yy (v:register ==# '"' ? '"+' : '') . 'yy'
+nnoremap <expr> Y (v:register ==# '"' ? '"+' : '') . 'Y'
+xnoremap <expr> y (v:register ==# '"' ? '"+' : '') . 'y'
+xnoremap <expr> Y (v:register ==# '"' ? '"+' : '') . 'Y'
+nnoremap <expr> p (v:register ==# '"' ? '"+' : '') . 'p'
+nnoremap <expr> P (v:register ==# '"' ? '"+' : '') . 'P'
+xnoremap <expr> p (v:register ==# '"' ? '"+' : '') . 'p'
+xnoremap <expr> P (v:register ==# '"' ? '"+' : '') . 'P'
 
-"""Get cutting and pasting working
-set clipboard^=unnamedplus
-"vmap <C-c> "*y :let @+=@*<CR>
-"vmap <C-S-c> "*y :let @+=@*<CR>
-"nmap <C-v> ["+]gP
-"nmap <C-S-v> ["*]gP
-"imap <C-v> <Esc>["+]gP<Esc>i<Right>
-"imap <C-S-v> <Esc>["*]gP<Esc>i<Right>
-"""Actually, my terminal captures all of the Ctrl+C and Ctrl+V stuff, so I really
-"""just need to get used to y and p
-":nnoremap <expr> y (v:register ==# '"' ? '"+' : '') . 'y'
-":nnoremap <expr> yy (v:register ==# '"' ? '"+' : '') . 'yy'
-":nnoremap <expr> Y (v:register ==# '"' ? '"+' : '') . 'Y'
-":xnoremap <expr> y (v:register ==# '"' ? '"+' : '') . 'y'
-":xnoremap <expr> Y (v:register ==# '"' ? '"+' : '') . 'Y'
+"""Use sane puts
+nmap p P
+xmap p P
+map p P
 
+"""Delete should use its own buffer, not the main
+nnoremap <expr> d (v:register ==# '"' ? '"d' : '') . 'd'
+xnoremap <expr> d (v:register ==# '"' ? '"d' : '') . 'd'
 
 """utf-8 encoding is BEST ENCODING!!!
 set encoding=utf-8
