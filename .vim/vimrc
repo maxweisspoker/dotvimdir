@@ -105,12 +105,13 @@ Plug 'skywind3000/asyncrun.vim'
 
 ""Latex
 Plug 'lervag/vimtex'
-Plug 'ying17zi/vim-live-latex-preview'
+"Plug 'ying17zi/vim-live-latex-preview'
 
 ""Unite and Zotero
 Plug 'Shougo/neomru.vim'
-Plug 'Shougo/unite.vim'
-Plug 'rafaqz/citation.vim'
+"Plug 'Shougo/unite.vim'
+"Plug 'Shougo/denite.nvim'
+"Plug 'rafaqz/citation.vim'
 
 ""Sometimes works sometimes doesn't
 Plug 'tpope/vim-sensible'
@@ -195,7 +196,7 @@ let g:citation_vim_cache_path='/tmp/vim_citation_cache'
 let g:citation_vim_outer_prefix="["
 let g:citation_vim_inner_prefix="@"
 let g:citation_vim_suffix="]"
-let g:citation_vim_et_al_limit=5
+let g:citation_vim_et_al_limit=2
 let g:citation_vim_reverse_order=1
 
 """Don't go back a char when leaving insert mode
@@ -534,9 +535,9 @@ let g:ale_linters = {
             \ 'cpp' : ['gcc','clang']
             \       }
 " ALE C++ confiure
-let g:ale_cpp_clang_options = '-std=c++11 -Wall'
+let g:ale_cpp_clang_options = '-std=c++11 -Wall -Wextra'
 let g:ale_cpp_gcc_executable = 'g++'
-let g:ale_cpp_gcc_options = '-std=c++11 -Wall'
+let g:ale_cpp_gcc_options = '-std=c++11 -Wall -Wextra'
 let g:ale_cpp_cppcheck_options = ''
 
 """LOL no don't fucking hide shit from me, fuck you
