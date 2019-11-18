@@ -115,7 +115,7 @@ Plug 'Shougo/neomru.vim'
 
 ""Sometimes works sometimes doesn't
 Plug 'tpope/vim-sensible'
-Plug 'Valloric/YouCompleteMe', { 'do': 'git submodule update --init --recursive && python3 ./install.py --clang-completer --system-libclang' }
+Plug 'Valloric/YouCompleteMe', { 'do': 'git submodule update --init --recursive; git submodule sync --recursive && git submodule update && python3 ./install.py --clang-completer --system-libclang' }
 
 ""Currently not in use
 "Plug 'Yggdroot/indentLine'
