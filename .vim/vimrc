@@ -132,6 +132,9 @@ syntax enable
 
 
 
+""" Latex
+let g:tex_flavor = 'latex'
+
 """ConqueGDB stuff
 let g:ConqueTerm_CloseOnEnd=1       " close conque when program ends running
 let g:ConqueTerm_StartMessages=0    " display warning message if conqueTerm is configed incorrect
