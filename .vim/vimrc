@@ -5,15 +5,20 @@
 
 
 
+""" Before using Vim, you must export the location of this vimrc to the
+""" MYVIMRC env var in your shell.
+
+
+
 """Required settings
-set nocompatible " Suck it, Vi!
+set nocompatible " Take that, vi!
 filetype off
 
 
 
 """ """ Begin Plug settings """ """
 
-"""Download and install it first, if it's not installed, and run it
+"""Download and install Plug first, if it's not installed, and run it
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -136,6 +141,12 @@ syntax enable
 let g:tex_flavor = 'latex'
 
 """ConqueGDB stuff
+" For recent Python3 versions, ConqueGDB requires manually editing
+" ~/.vim/bundle/Conque-GDB/autoload/conque_gdb/conque_gdb.py
+" to change line 39:
+" class RegisteredBpDict(collections.MutableMapping):
+" to
+" class RegisteredBpDict(collections.abc.MutableMapping):
 let g:ConqueTerm_CloseOnEnd=1       " close conque when program ends running
 let g:ConqueTerm_StartMessages=0    " display warning message if conqueTerm is configed incorrect
 let g:ConqueGdb_Leader = '\'
@@ -168,7 +179,7 @@ if has ('autocmd') " Remain compatible with earlier versions
   augroup END
 endif " has autocmd
 
-"""Python ignore E501 line too long
+"""Python linter ignore E501 line too long
 let g:syntastic_python_checkers=['flake8']
 let g:syntastic_python_checker_args='--ignore=E501'
 let g:syntastic_python_flake8_post_args='--ignore=E501'
@@ -193,6 +204,7 @@ let g:cpp_class_decl_highlight = 1
 
 """Zotero
 let g:citation_vim_mode="zotero"
+" My zotero library is a mounted partition
 let g:citation_vim_zotero_path="~/mnt/Zotero"
 let g:citation_vim_zotero_version=5
 let g:citation_vim_cache_path='/tmp/vim_citation_cache'
@@ -208,12 +220,12 @@ au InsertLeave * call cursor([getpos('.')[1], getpos('.')[2]+1])
 """ Don't save or load sessions unless I tell you to
 let g:session_autosave = 'no'
 let g:session_autoload = 'no'
-let g:session_directory = '~/.vim-sessions'
+let g:session_directory = '~/.vim/.vim-sessions'
 
 """But do autosave every few minutes
 au BufRead,BufNewFile * let b:autosave_start_time=localtime()
 au CursorHold * call UpdateFile()
-" Try/catch used in function because it failed on empty new unnamed files, which I don't care about
+" Try/catch used in function because it fails on empty new unnamed files, which I don't care about
 function! UpdateFile()
   try
     if ((localtime() - b:autosave_start_time) >= 200)
@@ -226,7 +238,7 @@ function! UpdateFile()
 endfunction
 au BufWritePre * let b:autosave_start_time=localtime()
 
-"""Holy shit this no last character thing is getting old fast
+"""This no last character thing is getting old fast
 set virtualedit=onemore
 
 """Get cutting and pasting working by attempting to disable xorg sel buf
@@ -291,7 +303,7 @@ set listchars=tab:»·,trail:·,nbsp:·,extends:»,precedes:«
 "set listchars+=space:·
 set list
 
-"""Tabs are motherfucking 4 spaces damnit!!!
+"""Tabs are 4 spaces. Seriously. Make them 4 spaces. For real.
 set tabstop=4
 set softtabstop=4
 set expandtab
@@ -342,21 +354,23 @@ autocmd InsertLeave * set relativenumber
 "map qq <Esc>
 """Turns out, never! This qq command is actually working out brillitantly!
 """Actually, with caps lock set, this isn't really necessary.
+
 """On second thought, you know what, I am keeping it.
 imap qq <Esc>
 map qq <Esc>
 
 
 """While we're at it, force ourselves to practice proper vim movement
-map <up> <nop>
-map <down> <nop>
-map <left> <nop>
-map <right> <nop>
+"map <up> <nop>
+"map <down> <nop>
+"map <left> <nop>
+"map <right> <nop>
 """Practice, practice, practice!!!
 "imap <up> <nop>
 "imap <down> <nop>
 "imap <left> <nop>
 "imap <right> <nop>
+
 
 """Leave insert mode after 5 seconds of not editing
 function SetInsertOffTimer()
@@ -372,8 +386,9 @@ autocmd BufNew,BufNewFile,BufAdd,BufCreate,VimEnter * call SetInsertOffTimer()
 "noremap j <NOP>
 "noremap k <NOP>
 "noremap l <NOP>
-"""Nevermind that's too hard, I can't fucking move. Commenting those out
-"""took like eight minutes. Disabling the arrow keys is plenty for now.
+"""Nevermind that's too hard, I can't move, at all. Commenting those out
+"""took like eight minutes.
+
 
 """{{{Fold}}}
 set foldlevelstart=99
@@ -386,13 +401,13 @@ set nobackup
 """Write backup is cool tho
 set writebackup
 
-"""And for the love of God please do keep a swap file in case of a crash
+"""Yes for the love of all that is holy please do keep a swap file in case of a crash
 set swapfile
 
 """Show bottom info bar
 set ruler
 
-"""Remember damn near everything
+"""Remember everything
 set history=999
 set tabpagemax=50
 
@@ -426,7 +441,7 @@ set autowrite
 set autoread
 autocmd FocusGained,BufEnter * :silent! !
 
-"""If not in terminal, use good font
+"""If not in terminal, use a good font
 if has('gui_running')
     if has('gui_win32')
         set guifont=DejaVu_Sans_Mono:h10:cANSI
@@ -435,7 +450,7 @@ if has('gui_running')
     endif
 endif
 
-"""Find my homie
+"""Find matched braces
 set showmatch
 
 """Don't use unnecessary resources
@@ -479,7 +494,7 @@ imap <C-a> <nop>
 vmap <C-a> <nop>
 map <C-a> <nop>
 
-"""Just making sure enter key map above doesn't fuck up things
+"""Just making sure enter key map above doesn't mess things up
 autocmd CmdwinEnter * nmap <CR> <CR>
 autocmd BufReadPost quickfix nmap <CR> <CR>
 
@@ -491,16 +506,17 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 map <C-Bslash> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 
-"""Bitch you'll wrap when I fucking tell you to wrap
+"""Do not wrap, darn it!
 set linebreak
 set textwidth=0
 set wrapmargin=0
 set formatoptions-=t
 
-"""Like here, yes wrap here. Look like you wrap, but don't actually new line
+"""Ok, yes, wrap here
 set wrap
 
-"""God motherfucking damnit, I SAID YOU'LL WRAP WHEN I FUCKING TELL YOU TO WRAP
+"""Define function to not wrap because it keeps friggin wrapping, so we have to
+"""manually disable it frequently.
 function DisableAutoLineBreak()
     set wrap
     set linebreak
@@ -530,7 +546,7 @@ let g:ale_list_window_size = 5
 let g:ale_set_loclist = 0                   " not use locallist show repeat reuslt
 let g:ale_set_quickfix = 1                  " for different lint.
 let g:ale_lint_delay = 500                  " lint after 500 ms.
-let g:ale_lint_on_text_changed = 'normal'   " 'always' kind of annoy
+let g:ale_lint_on_text_changed = 'normal'   " 'always' kind of annoying
 let g:ale_lint_on_insert_leave = 1
 let g:airline#extentions#ale#enabled = 0
 let g:ale_linters = {
@@ -543,14 +559,14 @@ let g:ale_cpp_gcc_executable = 'g++'
 let g:ale_cpp_gcc_options = '-std=c++11 -Wall -Wextra'
 let g:ale_cpp_cppcheck_options = ''
 
-"""LOL no don't fucking hide shit from me, fuck you
+"""No, do not hide things from me
 set conceallevel=0
 setlocal conceallevel=0
 let g:vim_json_syntax_conceal = 0
 set cole=0
 au FileType * setl cole=0
 
-"""Turn on dem pretty colors
+"""Turn on purdy colors
 set background=dark
 colorscheme mydefault
 

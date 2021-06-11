@@ -1,2 +1,6 @@
 bundle/*
 autoload/*
+.vim-sessions
+.vim-sessions/
+.vim-sessions/*
+
