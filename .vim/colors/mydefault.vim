@@ -24,7 +24,7 @@ highlight    StatusLine   ctermfg=White       ctermbg=235          cterm=none
 highlight    StatusLineNC ctermfg=White       ctermbg=235          cterm=none
 highlight    LineNr       ctermfg=White       ctermbg=DarkBlue     cterm=bold
 highlight    CursorLineNr ctermfg=Yellow      ctermbg=Blue         cterm=bold
-highlight    MatchParen   ctermfg=White       ctermbg=Black        cterm=bold
+highlight    MatchParen   ctermfg=White       ctermbg=Green        cterm=bold
 highlight    SpecialKey   ctermfg=239         ctermbg=235
 highlight    Comment      ctermfg=228         ctermbg=235          cterm=italic
 

@@ -49,6 +49,7 @@ Plug 'shawncplus/phpcomplete.vim'
 Plug 'StanAngeloff/php.vim'
 Plug 'scrooloose/syntastic'
 Plug 'jiangmiao/auto-pairs'
+Plug 'vim-scripts/yaifa.vim'
 
 "Python specifically
 Plug 'tmhedberg/SimpylFold'
@@ -120,7 +121,7 @@ Plug 'Shougo/neomru.vim'
 
 ""Sometimes works sometimes doesn't
 Plug 'tpope/vim-sensible'
-Plug 'Valloric/YouCompleteMe', { 'do': 'git submodule update --init --recursive; git submodule sync --recursive && git submodule update && python3 ./install.py --clang-completer --system-libclang' }
+Plug 'Valloric/YouCompleteMe', { 'do': 'git submodule update --init --recursive; git submodule sync --recursive && git submodule update && python3 ./install.py --clang-completer --system-libclang --go-completer' }
 
 ""Currently not in use
 "Plug 'Yggdroot/indentLine'
