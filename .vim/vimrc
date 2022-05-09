@@ -57,6 +57,9 @@ Plug 'vim-scripts/indentpython.vim'
 Plug 'nvie/vim-flake8'
 autocmd BufRead,BufNewFile *.py,*.pyw let python_highlight_all=1
 
+"Go specific
+Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries' }
+
 "Java specific
 Plug 'mikelue/vim-maven-plugin'
 Plug 'JalaiAmitahl/maven-compiler.vim'
