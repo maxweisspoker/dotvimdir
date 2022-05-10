@@ -111,6 +111,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'matze/vim-move'
 Plug 'tpope/vim-surround'
 Plug 'skywind3000/asyncrun.vim'
+Plug 'airblade/vim-gitgutter'
 
 ""Latex
 Plug 'lervag/vimtex'
