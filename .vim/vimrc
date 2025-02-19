@@ -91,7 +91,7 @@ Plug 'w0rp/ale'
 Plug 'djoshea/vim-autoread'
 
 "Debugging
-Plug 'vim-scripts/Conque-GDB'
+"Plug 'vim-scripts/Conque-GDB'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'idanarye/vim-vebugger'
 
